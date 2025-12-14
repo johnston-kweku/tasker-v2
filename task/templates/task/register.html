@@ -1,0 +1,81 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<style>
+    .signup-container {
+        max-width: 500px;
+        margin: 60px auto;
+        padding: 30px 20px;
+        background-color: #f8f9fa; /* Light background */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .signup-container h1 {
+        text-align: center;
+        color: #28a745;
+        margin-bottom: 25px;
+    }
+
+    /* Form styling */
+    .signup-container form p {
+        margin-bottom: 15px;
+    }
+
+    .signup-container input[type="text"],
+    .signup-container input[type="email"],
+    .signup-container input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    /* Submit button */
+    .signup-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .signup-container button:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 500px) {
+        .signup-container {
+            padding: 20px 15px;
+        }
+
+        .signup-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .signup-container button {
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="signup-container">
+    <h1>Sign Up</h1>
+    <form action="{% url 'task:register' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="submit">Sign Up</button>
+    </form>
+</div>
+{% endblock %}

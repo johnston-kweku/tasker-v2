@@ -1,0 +1,82 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<style>
+    .update-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px 20px;
+        background-color: #f8f9fa; /* Light background */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .update-container h3 {
+        text-align: center;
+        color: #28a745;
+        margin-bottom: 25px;
+    }
+
+    /* Django form styling */
+    .update-container form p {
+        margin-bottom: 15px;
+    }
+
+    .update-container input[type="text"],
+    .update-container input[type="date"],
+    .update-container textarea,
+    .update-container select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    /* Submit button */
+    .update-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .update-container button:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 500px) {
+        .update-container {
+            padding: 20px 15px;
+        }
+
+        .update-container h3 {
+            font-size: 1.8rem;
+        }
+
+        .update-container button {
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="update-container">
+    <h3>Update {{ task.title }}</h3>
+    <form action="{% url 'task:update' task.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="submit">Confirm Changes</button>
+    </form>
+</div>
+{% endblock %}

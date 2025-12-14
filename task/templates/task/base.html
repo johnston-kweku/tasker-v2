@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasker</title>
+    <style>
+        /* Navbar container */
+        .navbar {
+            position: fixed; /* Static at top */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #28a745; /* Green */
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        /* Links container */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Navbar links */
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Hover effect */
+        .nav-links a:hover {
+            background-color: #218838;
+            color: #fff;
+        }
+
+        /* Greeting text */
+        .greeting {
+            margin: 0;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Hamburger menu button */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* Responsive menu */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                flex-direction: column;
+                width: 100%;
+                background-color: #28a745;
+                transition: left 0.3s;
+                padding: 20px 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            /* Hide greeting on navbar and move inside menu */
+            .greeting-desktop {
+                display: none;
+            }
+
+            .greeting-mobile {
+                display: block;
+                color: white;
+                font-weight: bold;
+                padding: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* Hide mobile greeting on desktop */
+        .greeting-mobile {
+            display: none;
+        }
+
+        body {
+            margin: 0;
+            padding-top: 60px; /* Prevent content hiding under navbar */
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-links" id="navLinks">
+            <a href="{% url 'task:index' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'task:logout' %}">Log out</a>
+                <p class="greeting-mobile">Hello {{ user.username }}</p>
+            {% else %}
+                <a href="{% url 'task:register' %}">Sign up</a>
+                <a href="{% url 'task:login' %}">Login</a>
+            {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <p class="greeting greeting-desktop">Hello {{ user.username }}</p>
+        {% endif %}
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    {% block content %}{% endblock content %}
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

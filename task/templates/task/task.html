@@ -1,0 +1,135 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<style>
+    .task-detail-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .task-detail-container a.back-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #28a745;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: color 0.3s;
+    }
+
+    .task-detail-container a.back-link:hover {
+        color: #218838;
+    }
+
+    .task-detail-container h1 {
+        color: #28a745;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .task-detail-container p {
+        font-size: 1rem;
+        color: #555;
+        margin: 8px 0;
+    }
+
+    .task-detail-container .status-completed {
+        color: #155724;
+        font-weight: bold;
+    }
+
+    .task-detail-container .status-pending {
+        color: #721c24;
+        font-weight: bold;
+    }
+
+    .task-detail-container .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 25px;
+        flex-wrap: wrap;
+    }
+
+    .task-detail-container .action-buttons a {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .task-detail-container .action-buttons a.update {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .task-detail-container .action-buttons a.update:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    .task-detail-container .action-buttons a.delete {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .task-detail-container .action-buttons a.delete:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+    }
+
+    .task-detail-container .action-buttons a.toggle {
+        background-color: #ffc107; /* Yellow for toggle */
+        color: #212529;
+    }
+
+    .task-detail-container .action-buttons a.toggle:hover {
+        background-color: #e0a800;
+        transform: translateY(-2px);
+    }
+
+    @media screen and (max-width: 500px) {
+        .task-detail-container {
+            padding: 20px 15px;
+        }
+
+        .task-detail-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .task-detail-container .action-buttons a {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="task-detail-container">
+    <a href="{% url 'task:tasks' %}" class="back-link">⬅ Back to Tasks</a>
+
+    <h1>Task: {{ task.title }}</h1>
+
+    <p>Description: {{ task.task_description }}</p>
+    <p>Date created: {{ task.created_at|date:"M d, Y H:i" }}</p>
+
+    {% if task.completed %}
+        <p class="status-completed">Status: Completed</p>
+    {% else %}
+        <p class="status-pending">Status: Not Completed</p>
+    {% endif %}
+
+    <div class="action-buttons">
+        {% if task.completed %}
+            <a href="{% url 'task:toggle' task.id %}" class="toggle">Mark as Not Completed</a>
+        {% else %}
+            <a href="{% url 'task:toggle' task.id %}" class="toggle">Mark as Completed</a>
+        {% endif %}
+        <a href="{% url 'task:update' task.id %}" class="update">Update Task</a>
+        <a href="{% url 'task:delete_task' task.id %}" class="delete">Delete Task</a>
+    </div>
+</div>
+{% endblock content %}

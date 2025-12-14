@@ -1,0 +1,85 @@
+{% extends 'task/base.html' %}
+{% block title %}Tasker | Login{% endblock %}
+
+{% block content %}
+<style>
+    /* Home page container */
+    .home-container {
+        text-align: center;
+        padding: 50px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* Page title */
+    .home-container h1 {
+        font-size: 3rem;
+        color: #28a745; /* Match navbar */
+        margin-bottom: 20px;
+    }
+
+    /* Description text */
+    .home-container p {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    /* Buttons */
+    .home-container .btn {
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        padding: 12px 25px;
+        margin: 5px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .home-container .btn:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    /* Task summary text */
+    .home-container .task-summary {
+        margin-top: 30px;
+        font-size: 1rem;
+        color: #555;
+        font-style: italic;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 600px) {
+        .home-container h1 {
+            font-size: 2.2rem;
+        }
+
+        .home-container p {
+            font-size: 1rem;
+        }
+
+        .home-container .btn {
+            padding: 10px 20px;
+        }
+    }
+</style>
+
+<div class="home-container">
+    <h1>Welcome to Tasker!</h1>
+    <p>Track your tasks, stay organized, and be more productive.</p>
+
+    <a href="{% url 'task:tasks' %}" class="btn">View Tasks</a>
+    <a href="{% url 'task:add_task' %}" class="btn">Add New Task</a>
+
+    {% if user.is_authenticated %}
+    {% if tasks %}
+        <p class="task-summary">You currently have {{ task_count }} task{{ tasks_count|pluralize }}.</p>
+    {% else %}
+        <p class="task-summary">No tasks yet. Start by adding a new task!</p>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

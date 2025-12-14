@@ -1,0 +1,118 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<style>
+    .tasks-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .tasks-container h1 {
+        color: #28a745;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .tasks-container p.add-task-link {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .tasks-container p.add-task-link a {
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .tasks-container p.add-task-link a:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    .task-item {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+        list-style: none;
+    }
+
+    .task-item a {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #28a745;
+        text-decoration: none;
+    }
+
+    .task-item a:hover {
+        text-decoration: underline;
+    }
+
+    .task-item p {
+        margin: 5px 0;
+        color: #555;
+    }
+
+    .task-item .status-completed {
+        color: #155724;
+        font-weight: bold;
+    }
+
+    .task-item .status-pending {
+        color: #721c24;
+        font-weight: bold;
+    }
+
+    /* Task count at top */
+    .task-count {
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 600px) {
+        .tasks-container {
+            padding: 20px 10px;
+        }
+
+        .task-item a {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="tasks-container">
+    <h1>Tasks</h1>
+
+    {% if tasks %}
+        <p class="task-count">You currently have {{ tasks|length }} task{{ tasks|length|pluralize }}.</p>
+    {% endif %}
+
+    <p class="add-task-link">
+        <a href="{% url 'task:add_task' %}">Add Task</a>
+    </p>
+
+    {% for task in tasks %}
+    <div class="task-item">
+        <a href="{% url 'task:task' task.id %}">{{ task.title }}</a>
+        <p>Description: {{ task.task_description }}</p>
+        <p>Date created: {{ task.created_at|date:"M d, Y H:i" }}</p>
+        {% if task.completed %}
+            <p class="status-completed">Status: Completed</p>
+        {% else %}
+            <p class="status-pending">Status: Not Completed</p>
+        {% endif %}
+    </div>
+    {% empty %}
+        <p>No tasks have been added yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

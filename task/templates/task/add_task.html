@@ -1,0 +1,84 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<style>
+    /* Container */
+    .form-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px 20px;
+        background-color: #f8f9fa; /* Light gray background */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Page heading */
+    .form-container h1 {
+        text-align: center;
+        color: #28a745;
+        margin-bottom: 25px;
+    }
+
+    /* Django form fields */
+    .form-container form p {
+        margin-bottom: 15px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="date"],
+    .form-container textarea,
+    .form-container select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    /* Submit button */
+    .form-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .form-container button:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 500px) {
+        .form-container {
+            padding: 20px 15px;
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .form-container button {
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <h1>Add New Task</h1>
+    <form action="{% url 'task:add_task' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="submit">Add Task</button>
+    </form>
+</div>
+{% endblock %}

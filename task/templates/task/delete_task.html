@@ -1,0 +1,81 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<style>
+    .delete-container {
+        max-width: 500px;
+        margin: 60px auto;
+        padding: 30px 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .delete-container p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 25px;
+    }
+
+    .delete-container form {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .delete-container button,
+    .delete-container a.cancel-link {
+        padding: 12px 25px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s, transform 0.2s;
+        cursor: pointer;
+    }
+
+    .delete-container button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .delete-container button:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+    }
+
+    .delete-container a.cancel-link {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .delete-container a.cancel-link:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    @media screen and (max-width: 500px) {
+        .delete-container form {
+            flex-direction: column;
+        }
+
+        .delete-container button,
+        .delete-container a.cancel-link {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="delete-container">
+    <p>Proceed to delete task: <strong>{{ task.title }}</strong></p>
+    <form action="{% url 'task:delete_task' task.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+        <a href="{% url 'task:tasks' %}" class="cancel-link">Cancel</a>
+    </form>
+</div>
+{% endblock %}

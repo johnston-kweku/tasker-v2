@@ -1,0 +1,105 @@
+{% extends 'task/base.html' %}
+
+
+{% block content %}
+<style>
+    .login-container {
+        max-width: 450px;
+        margin: 60px auto;
+        padding: 30px 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .login-container h2 {
+        color: #28a745;
+        margin-bottom: 25px;
+    }
+
+    .login-container form p {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .login-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .login-container button:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    .login-container p.signup-link {
+        margin-top: 20px;
+        font-size: 0.95rem;
+    }
+
+    .login-container p.signup-link a {
+        color: #28a745;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .login-container p.signup-link a:hover {
+        text-decoration: underline;
+    }
+
+    .login-container .error-message {
+        color: red;
+        margin-top: 15px;
+    }
+
+    @media screen and (max-width: 500px) {
+        .login-container {
+            padding: 20px 15px;
+        }
+
+        .login-container h2 {
+            font-size: 1.8rem;
+        }
+
+        .login-container button {
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'task:login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+
+    <p class="signup-link">Don't have an account? <a href="{% url 'task:register' %}">Sign up</a></p>
+
+    {% if form.errors %}
+        <p class="error-message">Invalid username or password</p>
+    {% endif %}
+</div>
+{% endblock %}
