@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+dj-database-url = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
