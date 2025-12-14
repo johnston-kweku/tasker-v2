@@ -110,9 +110,9 @@
         {% else %}
             <p class="status-pending">Status: Not Completed</p>
         {% endif %}
+        {% empty %}
+            <p class="add-task-link">No tasks have been added yet.</p>
+        {% endfor %}
     </div>
-    {% empty %}
-        <p>No tasks have been added yet.</p>
-    {% endfor %}
 </div>
 {% endblock %}
