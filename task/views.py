@@ -42,6 +42,7 @@ def task(request, task_id):
 
     return render(request, 'task/task.html', context)
 
+@login_required
 def add_task(request):
     if request.method != 'POST':
         form = TaskForm()
