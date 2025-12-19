@@ -26,7 +26,7 @@ def index(request):
 @login_required
 def tasks(request):
     """Show all tasks and their decriptions."""
-    tasks = Task.objects.filter(user=request.user)
+    tasks = Task.objects.filter(user=request.user).order_by('-created_at')
     context = {
         'tasks':tasks,
     }
